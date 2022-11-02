@@ -21,19 +21,19 @@ module.exports = (err, req, res, next) => {
 
     error.message = err.message;
 
-    // Wrong Mongoose Object ID Error
+    // Wrong db Object ID Error
     if (err.name === 'CastError') {
       const message = `Resource not found. Invalid: ${err.path}`;
       error = new ErrorHandler(message, 400);
     }
 
-    // Handling Mongoose Validation Error
+    // Handling db Validation Error
     if (err.name === 'ValidationError') {
       const message = Object.values(err.errors).map((value) => value.message);
       error = new ErrorHandler(message, 400);
     }
 
-    // Handling Mongoose duplicate key errors
+    // Handling db duplicate key errors
     if (err.code === 11000) {
       const message = `Duplicate ${Object.keys(err.keyValue)} entered`;
       error = new ErrorHandler(message, 400);

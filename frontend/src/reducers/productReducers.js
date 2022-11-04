@@ -3,6 +3,9 @@ import {
   ALL_PRODUCTS_SUCCESS,
   ALL_PRODUCTS_FAIL,
   CLEAR_ERRORS,
+  // PRODUCT_DETAILS_REQUEST,
+  // PRODUCT_DETAILS_SUCCESS,
+  // PRODUCT_DETAILS_FAIL,
 } from '../constants/productConstans';
 
 export const productsReducer = (state = { products: [] }, action) => {
@@ -16,7 +19,7 @@ export const productsReducer = (state = { products: [] }, action) => {
     case ALL_PRODUCTS_SUCCESS:
       return {
         loading: false,
-        products: action.payload.products,
+        products: action.payload.product,
         productCount: action.payload.productCount,
       };
 

@@ -16,7 +16,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProducts = async (req, res, next) => {
-  const resPerPage = 4;
+  const resPerPage = 8;
   const productCount = await Product.countDocuments();
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
@@ -24,12 +24,14 @@ exports.getProducts = async (req, res, next) => {
     .pagination(resPerPage);
 
   const product = await apiFeatures.query;
-  res.status(200).json({
-    success: true,
-    message: 'Product are displayed',
-    productCount,
-    product,
-  });
+  setTimeout(() => {
+    res.status(200).json({
+      success: true,
+      message: 'Product are displayed',
+      productCount,
+      product,
+    });
+  }, 1000);
 };
 
 // Get single product details   =>   /api/v1/product/:id
@@ -59,6 +61,7 @@ exports.UpdateProduct = async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
+    resPerPage,
   });
 };
 

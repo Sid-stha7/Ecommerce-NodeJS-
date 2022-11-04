@@ -6,6 +6,7 @@ import Header from './components/header';
 import Home from './components/home';
 
 import './App.css';
+import ProductDetails from './components/products/ProductDetails';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
         <Header />
         <div className="container-fluid container">
           <Switch>
-            <Route path="/" component={Home} exact></Route>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/product/:id" component={ProductDetails} />
           </Switch>
         </div>
         <Footer />

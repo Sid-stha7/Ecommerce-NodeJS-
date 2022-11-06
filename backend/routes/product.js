@@ -7,15 +7,18 @@ const {
   getSingleProduct,
   UpdateProduct,
   DelteProduces,
+  adminProducts,
 } = require(`../controllers/productController`);
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 
 router.route('/products').get(getProducts); //TODO: get data from db
+
+router.route('/admin/products').get(adminProducts); //TODO: get data from db
 router.route('/product/:id').get(getSingleProduct); //TODO: get single product with id
 
 //**admin routes */
 router
-  .route('/product/new')
+  .route('/admin/product/new')
   .post(isAuthenticatedUser, authorizeRoles('admin'), newProduct); //TODO: post data into db
 
 router

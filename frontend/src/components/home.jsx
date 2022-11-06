@@ -13,8 +13,24 @@ import { useState } from 'react';
 import { getProducts } from './action/productActions';
 import Product from './products/Product';
 
-const Home = () => {
+const Home = ({ match }) => {
   const [currentPage, setCurrentPage] = useState();
+
+  const [category, setCategory] = useState('');
+  const categories = [
+    'Electronics',
+    'Cameras',
+    'Laptops',
+    'Accessories',
+    'Headphones',
+    'Food',
+    'Books',
+    'Clothes/Shoes',
+    'Beauty/Health',
+    'Sports',
+    'Outdoor',
+    'Home',
+  ];
   const dispatch = useDispatch();
   const alert = useAlert();
   // const alert = useAlert();
@@ -22,14 +38,15 @@ const Home = () => {
     (state) => state.products
   );
 
+  const keyword = match.params.keyword;
   useEffect(() => {
     if (error) {
       return alert.error(error);
     } else {
       alert.success('success');
     }
-    dispatch(getProducts(currentPage));
-  }, [dispatch, alert, error, currentPage]);
+    dispatch(getProducts(keyword, currentPage, category));
+  }, [dispatch, alert, error, keyword, currentPage, category]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
@@ -45,10 +62,33 @@ const Home = () => {
 
           <section id="products" class="container mt-5">
             <div class="row">
-              {products &&
-                products.map((product) => (
-                  <Product key={product._id} product={product} />
-                ))}
+              <div className="d-flex">
+                <hr className="my-5" />
+
+                <div className="mt-5">
+                  <h4 className="mb-3">Categories</h4>
+
+                  <ul className="pl-0">
+                    {categories.map((category) => (
+                      <li
+                        style={{
+                          cursor: 'pointer',
+                          listStyleType: 'none',
+                        }}
+                        key={category}
+                        onClick={() => setCategory(category)}
+                      >
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {products &&
+                  products.map((product) => (
+                    <Product key={product._id} product={product} />
+                  ))}
+              </div>
             </div>
           </section>
           {resPerPage <= productCount && (

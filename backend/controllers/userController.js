@@ -2,18 +2,23 @@ const User = require('../models/user');
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
-
+const cloudinary = require('cloudinary');
 //register user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
+  const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+    folder: 'avatars',
+    width: 150,
+    crop: 'scale',
+  });
+
   const { name, email, password } = req.body;
   const user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id:
-        'avatars/298493756_120960270680381_8139002338240622070_n_ma7gtc',
-      url: 'https://res.cloudinary.com/dfd1u3mh8/image/upload/v1667279300/avatars/298493756_120960270680381_8139002338240622070_n_ma7gtc.jpg',
+      public_id: result.public_id,
+      url: result.secure_url,
     },
   });
 
@@ -46,9 +51,7 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
   sendToken(user, 200, res);
 });
 
-//!!buggggg is here not working///
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
-  console.log(req.user.id);
   const user = await User.findById(req.user.id);
   // console.log("something");
   res.status(200).json({
@@ -81,23 +84,23 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   };
 
   // TODO:Update avatar
-  // if (req.body.avatar !== '') {
-  //   const user = await User.findById(req.user.id);
+  if (req.body.avatar !== '') {
+    const user = await User.findById(req.user.id);
 
-  //   const image_id = user.avatar.public_id;
-  //   const res = await cloudinary.v2.uploader.destroy(image_id);
+    const image_id = user.avatar.public_id;
+    const res = await cloudinary.v2.uploader.destroy(image_id);
 
-  //   const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-  //     folder: 'avatars',
-  //     width: 150,
-  //     crop: 'scale',
-  //   });
+    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
+      folder: 'avatars',
+      width: 150,
+      crop: 'scale',
+    });
 
-  //   newUserData.avatar = {
-  //     public_id: result.public_id,
-  //     url: result.secure_url,
-  //   };
-  // }
+    newUserData.avatar = {
+      public_id: result.public_id,
+      url: result.secure_url,
+    };
+  }
 
   const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,

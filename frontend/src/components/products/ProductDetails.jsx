@@ -7,7 +7,8 @@ import MetaData from '../MetaData';
 import { useAlert } from 'react-alert';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails, clearErrors } from '../action/productActions';
-// import { addItemToCart } from '../../actions/cartActions';
+import { addItemToCart } from '../action/cartActions';
+
 // import { NEW_REVIEW_RESET } from '../../constants/productConstants';
 
 const ProductDetails = ({ match }) => {
@@ -30,6 +31,11 @@ const ProductDetails = ({ match }) => {
       dispatch(clearErrors());
     }
   }, [dispatch, alert, error, match.params.id]);
+
+  const addToCart = () => {
+    dispatch(addItemToCart(match.params.id, quantity));
+    alert.success('Item added to cart');
+  };
 
   const increaseQty = () => {
     const count = document.querySelector('.count');
@@ -148,6 +154,7 @@ const ProductDetails = ({ match }) => {
                 id="cart_btn"
                 className="btn btn-primary d-inline ml-4"
                 disabled={product.stock === 0}
+                onClick={addToCart}
               >
                 Add to Cart
               </button>

@@ -36,6 +36,9 @@ import Dashboard from './components/admin/Dashboard';
 import ProductList from './components/admin/productList';
 import NewProduct from './components/admin/newProduct';
 import { useSelector } from 'react-redux';
+import UpdateProduct from './components/admin/UpdateProduct';
+import OrdersList from './components/admin/OrderList';
+import ProcessOrder from './components/admin/ProcessOrder';
 
 function App() {
   useEffect(() => {
@@ -96,6 +99,25 @@ function App() {
           path="/admin/product"
           isAdmin={true}
           component={NewProduct}
+        />
+
+        <ProtectedRoute
+          exact
+          path="/admin/product/:id"
+          isAdmin={true}
+          component={UpdateProduct}
+        />
+        <ProtectedRoute
+          path="/admin/orders"
+          isAdmin={true}
+          component={OrdersList}
+          exact
+        />
+        <ProtectedRoute
+          path="/admin/order/:id"
+          isAdmin={true}
+          component={ProcessOrder}
+          exact
         />
         <Footer />
       </div>

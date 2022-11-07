@@ -40,7 +40,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getProducts = async (req, res, next) => {
-  const resPerPage = 8;
+  const resPerPage = 4;
   const productCount = await Product.countDocuments();
   const apiFeatures = new APIFeatures(Product.find(), req.query)
     .search()
@@ -100,20 +100,29 @@ exports.UpdateProduct = async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
-    resPerPage,
   });
 };
 
 //Delete product => /api/v1/admin/product/id
 
-exports.DelteProduces = async (req, res, next) => {
-  const product = await Product.findByIdAndDelete(req.params.id);
-  if (!product) {
-    return next(new ErrorHandler('Product not found', 404));
-  }
+exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
+  const product = await Product.findById(req.params.id);
+
+  // if (!product) {
+  //   return next(new ErrorHandler('Product not found', 404));
+  // }
+
+  // // Deleting images associated with the product
+  // for (let i = 0; i < product.images.length; i++) {
+  //   const result = await cloudinary.v2.uploader.destroy(
+  //     product.images[i].public_id
+  //   );
+  // }
+
   await product.deleteOne();
+
   res.status(200).json({
     success: true,
-    message: 'Product is deleted',
+    message: 'Product is deleted.',
   });
-};
+});

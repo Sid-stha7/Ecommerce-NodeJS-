@@ -6,7 +6,8 @@ const {
   newProduct,
   getSingleProduct,
   UpdateProduct,
-  DelteProduces,
+  deleteProduct,
+
   adminProducts,
 } = require(`../controllers/productController`);
 const { isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
@@ -24,7 +25,7 @@ router
 router
   .route('/admin/product/:id')
   .put(isAuthenticatedUser, authorizeRoles('admin'), UpdateProduct) //TODO: update data from id in db
-  .delete(isAuthenticatedUser, authorizeRoles('admin'), DelteProduces); //TODO: delte data from id in db
+  .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteProduct); //TODO: delte data from id in db
 
 //**export module */
 module.exports = router;

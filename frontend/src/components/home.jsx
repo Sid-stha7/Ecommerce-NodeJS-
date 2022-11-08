@@ -16,21 +16,23 @@ import Product from './products/Product';
 const Home = ({ match }) => {
   const [currentPage, setCurrentPage] = useState();
 
-  const [category, setCategory] = useState('');
-  const categories = [
-    'Electronics',
-    'Cameras',
-    'Laptops',
-    'Accessories',
-    'Headphones',
-    'Food',
-    'Books',
-    'Clothes/Shoes',
-    'Beauty/Health',
-    'Sports',
-    'Outdoor',
-    'Home',
-  ];
+  //  TODO for future features for filter
+
+  // const [category, setCategory] = useState('');
+  // const categories = [
+  //   'Electronics',
+  //   'Cameras',
+  //   'Laptops',
+  //   'Accessories',
+  //   'Headphones',
+  //   'Food',
+  //   'Books',
+  //   'Clothes/Shoes',
+  //   'Beauty/Health',
+  //   'Sports',
+  //   'Outdoor',
+  //   'Home',
+  // ];
   const dispatch = useDispatch();
   const alert = useAlert();
   // const alert = useAlert();
@@ -45,8 +47,8 @@ const Home = ({ match }) => {
     } else {
       alert.success('success');
     }
-    dispatch(getProducts(keyword, currentPage, category));
-  }, [dispatch, alert, error, keyword, currentPage, category]);
+    dispatch(getProducts(keyword, currentPage));
+  }, [dispatch, alert, error, keyword, currentPage]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
@@ -66,9 +68,9 @@ const Home = ({ match }) => {
                 <hr className="my-5" />
 
                 <div className="mt-5">
-                  <h4 className="mb-3">Categories</h4>
+                  {/* <h4 className="mb-3">Categories</h4> */}
 
-                  <ul className="pl-0">
+                  {/* <ul className="pl-0">
                     {categories.map((category) => (
                       <li
                         style={{
@@ -81,13 +83,15 @@ const Home = ({ match }) => {
                         {category}
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </div>
 
-                {products &&
-                  products.map((product) => (
-                    <Product key={product._id} product={product} />
-                  ))}
+                <div className="row">
+                  {products &&
+                    products.map((product) => (
+                      <Product key={product._id} product={product} />
+                    ))}
+                </div>
               </div>
             </div>
           </section>

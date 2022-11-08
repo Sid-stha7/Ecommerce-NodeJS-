@@ -3,7 +3,7 @@ const Product = require('../models/product');
 
 const ErrorHandler = require('../utils/ErrorHandler');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
-
+var nodemailer = require('nodemailer');
 // Create a new order   =>  /api/v1/order/new
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
@@ -119,5 +119,29 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
+  });
+});
+
+//send email
+// create reusable transporter object using the default SMTP transport
+
+exports.Mail = catchAsyncErrors(async (req, res, next) => {
+  const transporter = nodemailer.createTransport({
+    service: 'hotmail',
+    auth: {
+      user: 'ecommercetest2022@outlook.com',
+      pass: 'p@ssword2022',
+    },
+  });
+  const mailData = {
+    from: 'ecommercetest2022@outlook.com', // sender address
+    to: 'sidstha444@gmail.com', // list of receivers
+    subject: 'Sending Order Email ',
+    text: 'An order has been placed by user!',
+  };
+
+  transporter.sendMail(mailData, function (err, info) {
+    if (err) console.log(err);
+    else console.log(info.response);
   });
 });

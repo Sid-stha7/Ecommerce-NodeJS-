@@ -69,6 +69,7 @@ function App() {
             <ProtectedRoute exact path="/shipping" component={Shipping} />
             <ProtectedRoute path="/confirm" component={ConfirmOrder} exact />
             <ProtectedRoute path="/success" component={OrderSuccess} />
+
             {/* //TODO Route for payment */}
 
             <ProtectedRoute path="/payment" component={Payment} />

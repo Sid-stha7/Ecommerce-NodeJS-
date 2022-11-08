@@ -5,7 +5,11 @@ const Product = ({ product }) => {
   return (
     <div class="col-sm-12 col-md-6 col-lg-3 my-3">
       <div class="card p-3 rounded">
-        <img class="card-img-top mx-auto" />
+        {/* //TODO: Images dynamic has bugs */}
+        <img
+          class="card-img-top mx-auto"
+          src="https://m.media-amazon.com/images/I/617NtexaW2L._AC_UY218_.jpg"
+        />
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">
             <Link to={`/product/${product._id}`}>{product.name}</Link>

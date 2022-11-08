@@ -20,7 +20,7 @@ const Header = () => {
       <nav class="navbar row">
         <div class="col-12 col-md-3">
           <div class="navbar-brand">
-            <img src="" />
+            <img src="/images.logo.png" />
           </div>
         </div>
 

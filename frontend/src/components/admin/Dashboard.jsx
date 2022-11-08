@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
+  const { orders } = useSelector((state) => state.allOrders);
 
   let outofStock = 0;
   products.forEach((product) => {
@@ -70,7 +71,7 @@ const Dashboard = () => {
                   <div className="card-body">
                     <div className="text-center card-font-size">
                       Orders
-                      <br /> <b>125</b>
+                      <br /> <b>{orders && orders.length}</b>
                     </div>
                   </div>
                   <Link

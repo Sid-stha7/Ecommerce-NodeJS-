@@ -20,7 +20,12 @@ const Header = () => {
       <nav class="navbar row">
         <div class="col-12 col-md-3">
           <div class="navbar-brand">
-            <img src="/images.logo.png" />
+            <Link to="/">
+              <img
+                style={{ width: '50px', height: '50px' }}
+                src="/images/logo.png"
+              />
+            </Link>
           </div>
         </div>
 

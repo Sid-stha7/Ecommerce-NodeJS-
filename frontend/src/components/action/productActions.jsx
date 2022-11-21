@@ -72,7 +72,7 @@ export const newProduct = (productData) => async (dispatch) => {
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
       },
     };
 

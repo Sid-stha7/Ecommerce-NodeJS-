@@ -1,5 +1,5 @@
 const express = require('express');
-
+const expressFormidable = require('express-formidable');
 const {
   registerUser,
   loginUser,
@@ -31,7 +31,12 @@ router
 router
   .route('/admin/user/:id')
   .get(isAuthenticatedUser, authorizeRoles('admin'), getUserDetails)
-  .put(isAuthenticatedUser, authorizeRoles('admin'), updateUser)
+  .put(
+    expressFormidable({ maxFileSize: 6 * 1024 * 1024 }),
+    isAuthenticatedUser,
+    authorizeRoles('admin'),
+    updateUser
+  )
   .delete(isAuthenticatedUser, authorizeRoles('admin'), deleteUser);
 
 module.exports = router;

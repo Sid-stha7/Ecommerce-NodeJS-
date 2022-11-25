@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const expressFormidable = require('express-formidable');
 const {
   getProducts,
   newProduct,

@@ -91,11 +91,23 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     const image_id = user.avatar.public_id;
     const res = await cloudinary.v2.uploader.destroy(image_id);
 
-    const result = await cloudinary.v2.uploader.upload(req.body.avatar, {
-      folder: 'avatars',
-      width: 150,
-      crop: 'scale',
-    });
+    const result = await cloudinary.v2.uploader.upload_large(
+      req.body.avatar,
+
+      {
+        responsive_breakpoints: {
+          create_derived: true,
+          bytes_step: 20000,
+          min_width: 200,
+          max_width: 1000,
+          transformation: {
+            crop: 'fill',
+            aspect_ratio: '16:9',
+            gravity: 'auto',
+          },
+        },
+      }
+    );
 
     newUserData.avatar = {
       public_id: result.public_id,
